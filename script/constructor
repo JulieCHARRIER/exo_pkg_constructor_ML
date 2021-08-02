@@ -1,0 +1,116 @@
+#!/usr/bin/env python
+# -- coding: utf-8 --
+
+import os
+import sys
+
+
+def pkg_skeleton(project_name:str, package_name:str, script_name:str):
+    '''Create basic project template with all directories and files'''
+    os.system(f"mkdir {project_name}")
+    os.system(f"mkdir {project_name}/api")
+    os.system(f"mkdir {project_name}/notebooks")
+    os.system(f"mkdir {project_name}/{package_name}")
+    os.system(f"mkdir {project_name}/scripts")
+    os.system(f"mkdir {project_name}/tests")
+    os.system(f"mkdir {project_name}/data")
+    os.system(f"touch {project_name}/.gitignore")
+    os.system(f"touch {project_name}/Makefile")
+    os.system(f"touch {project_name}/README.md")
+    os.system(f"touch {project_name}/requirements.txt")
+    os.system(f"touch {project_name}/setup.py")
+    os.system(f"touch {project_name}/{package_name}/__init__.py")
+    os.system(f"touch {project_name}/{package_name}/data.py")
+    os.system(f"touch {project_name}/{package_name}/preprocessing.py")
+    os.system(f"touch {project_name}/{package_name}/pipeline.py")
+    os.system(f"touch {project_name}/{package_name}/ml.py")
+    os.system(f"touch {project_name}/notebooks/.keep")
+    os.system(f"touch {project_name}/scripts/{script_name}")
+    os.system(f"touch {project_name}/api/.keep")
+    os.system(f"touch {project_name}/tests/.keep")
+    os.system(f"touch {project_name}/data/.keep")
+
+# def writter(project_name:str, file_name:str):
+#     path = f"{os.getcwd()}/{project_name}"
+#     os.system('read -p "Enter text :" text')
+#     os.system(f'echo $text >> {path}/{file_name}')
+#     # with open('{}/{}'.format(path, file_name), 'w') as my_file:
+#     #     my_file.writelines(text)
+
+
+def writter_setup(project_name: str, file_name: str):
+    path = f"{os.getcwd()}/{project_name}"
+    with open(f'{path}/requirements.txt', 'r') as my_file:
+        requirements = [x for x in my_file.read().splitlines()]
+    scripts = [f'scripts/{x}' for x in os.listdir(f'{path}/scripts')]
+    text = f'''from setuptools import setup, find_packages
+
+setup(
+    name='{project_name}',
+    version='0.0.1',
+    packages=find_packages(),
+    scripts={scripts},
+    requirements={requirements}
+    )'''
+    with open('{}/{}'.format(path, file_name), 'w') as my_file:
+        my_file.writelines(text)
+
+
+def writter_requirements(project_name: str, file_name: str):
+    path = f"{os.getcwd()}/{project_name}"
+    text = '''numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+fastapi
+pytest'''
+    with open('{}/{}'.format(path, file_name), 'w') as my_file:
+        my_file.writelines(text)
+
+
+def writter_gitignore(project_name: str, file_name: str):
+    path = f"{os.getcwd()}/{project_name}"
+    text = '''/data
+.ipynb_checkpoints
+.pycache'''
+    with open('{}/{}'.format(path, file_name), 'w') as my_file:
+        my_file.writelines(text)
+
+
+def writter_makefile(project_name: str, file_name: str):
+    path = f"{os.getcwd()}/{project_name}"
+    text = '''install_requirements:
+    @pip install -r requirements.txt'''
+    with open('{}/{}'.format(path, file_name), 'w') as my_file:
+        my_file.writelines(text)
+
+
+def writter_readme(project_name: str, file_name: str):
+    path = f"{os.getcwd()}/{project_name}"
+    text = ''''''
+    with open('{}/{}'.format(path, file_name), 'w') as my_file:
+        my_file.writelines(text)
+
+
+def constructor():
+    if len(sys.argv) > 3:
+        project_name = sys.argv[1]
+        package_name = sys.argv[2]
+        script_name = sys.argv[3]
+        pkg_skeleton(project_name, package_name, script_name)
+    else:
+        project_name = sys.argv[1]
+        file_name = sys.argv[2]
+        if 'setup' in file_name:
+            writter_setup(project_name, file_name)
+        elif 'requirements' in file_name:
+            writter_requirements(project_name, file_name)
+        elif 'git' in file_name:
+            writter_gitignore(project_name, file_name)
+        elif 'Make' in file_name:
+            writter_makefile(project_name, file_name)
+        elif 'README' in file_name:
+            writter_readme(project_name, file_name)
+
+constructor()
