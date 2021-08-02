@@ -30,13 +30,6 @@ def pkg_skeleton(project_name:str, package_name:str, script_name:str):
     os.system(f"touch {project_name}/tests/.keep")
     os.system(f"touch {project_name}/data/.keep")
 
-# def writter(project_name:str, file_name:str):
-#     path = f"{os.getcwd()}/{project_name}"
-#     os.system('read -p "Enter text :" text')
-#     os.system(f'echo $text >> {path}/{file_name}')
-#     # with open('{}/{}'.format(path, file_name), 'w') as my_file:
-#     #     my_file.writelines(text)
-
 
 def writter_setup(project_name: str, file_name: str):
     path = f"{os.getcwd()}/{project_name}"
@@ -94,23 +87,15 @@ def writter_readme(project_name: str, file_name: str):
 
 
 def constructor():
-    if len(sys.argv) > 3:
-        project_name = sys.argv[1]
-        package_name = sys.argv[2]
-        script_name = sys.argv[3]
-        pkg_skeleton(project_name, package_name, script_name)
-    else:
-        project_name = sys.argv[1]
-        file_name = sys.argv[2]
-        if 'setup' in file_name:
-            writter_setup(project_name, file_name)
-        elif 'requirements' in file_name:
-            writter_requirements(project_name, file_name)
-        elif 'git' in file_name:
-            writter_gitignore(project_name, file_name)
-        elif 'Make' in file_name:
-            writter_makefile(project_name, file_name)
-        elif 'README' in file_name:
-            writter_readme(project_name, file_name)
+    project_name = sys.argv[1]
+    package_name = sys.argv[2]
+    script_name = sys.argv[3]
+    pkg_skeleton(project_name, package_name, script_name)
+    writter_requirements(project_name, 'requirements.txt')
+    writter_gitignore(project_name, '.gitignore')
+    writter_makefile(project_name, 'Makefile')
+    writter_readme(project_name, 'README.md')
+    writter_setup(project_name, 'setup.py')
+
 
 constructor()
