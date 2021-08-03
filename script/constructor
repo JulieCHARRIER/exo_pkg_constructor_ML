@@ -22,7 +22,7 @@ def pkg_skeleton(project_name:str, package_name:str, script_name:str):
     os.system(f"touch {project_name}/{package_name}/__init__.py")
     os.system(f"touch {project_name}/{package_name}/data.py")
     os.system(f"touch {project_name}/{package_name}/preprocessing.py")
-    os.system(f"touch {project_name}/{package_name}/pipeline.py")
+    os.system(f"touch {project_name}/{package_name}/pipeline_class.py")
     os.system(f"touch {project_name}/{package_name}/ml.py")
     os.system(f"touch {project_name}/notebooks/.keep")
     os.system(f"touch {project_name}/scripts/{script_name}")
