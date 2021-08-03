@@ -90,7 +90,7 @@ def writter_gitignore(project_name: str, file_name: str):
     path = f"{os.getcwd()}/{project_name}"
     text = '''/data
 .ipynb_checkpoints
-__pycache___'''
+__pycache__'''
     with open('{}/{}'.format(path, file_name), 'w') as my_file:
         my_file.writelines(text)
 
