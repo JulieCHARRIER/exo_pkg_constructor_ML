@@ -4,8 +4,7 @@
 import os
 import sys
 
-
-def pkg_skeleton(project_name:str, package_name:str, script_name:str):
+def pkg_skeleton_linux(project_name:str, package_name:str, script_name:str):
     '''Create basic project template with all directories and files'''
     os.system(f"mkdir {project_name}")
     os.system(f"mkdir {project_name}/api")
@@ -14,6 +13,31 @@ def pkg_skeleton(project_name:str, package_name:str, script_name:str):
     os.system(f"mkdir {project_name}/scripts")
     os.system(f"mkdir {project_name}/tests")
     os.system(f"mkdir {project_name}/data")
+    os.system(f"touch {project_name}/.gitignore")
+    os.system(f"touch {project_name}/Makefile")
+    os.system(f"touch {project_name}/README.md")
+    os.system(f"touch {project_name}/requirements.txt")
+    os.system(f"touch {project_name}/setup.py")
+    os.system(f"touch {project_name}/{package_name}/__init__.py")
+    os.system(f"touch {project_name}/{package_name}/data.py")
+    os.system(f"touch {project_name}/{package_name}/preprocessing.py")
+    os.system(f"touch {project_name}/{package_name}/pipeline_class.py")
+    os.system(f"touch {project_name}/{package_name}/ml.py")
+    os.system(f"touch {project_name}/notebooks/.keep")
+    os.system(f"touch {project_name}/scripts/{script_name}")
+    os.system(f"touch {project_name}/api/.keep")
+    os.system(f"touch {project_name}/tests/.keep")
+    os.system(f"touch {project_name}/data/.keep")
+
+def pkg_skeleton_win(project_name:str, package_name:str, script_name:str):
+    '''Create basic project template with all directories and files'''
+    os.makedirs(f"{project_name}")
+    os.makedirs(f"{project_name}/api")
+    os.makedirs(f"{project_name}/notebooks")
+    os.makedirs(f"{project_name}/{package_name}")
+    os.makedirs(f"{project_name}/scripts")
+    os.makedirs(f"{project_name}/tests")
+    os.makedirs(f"{project_name}/data")
     os.system(f"touch {project_name}/.gitignore")
     os.system(f"touch {project_name}/Makefile")
     os.system(f"touch {project_name}/README.md")
@@ -90,7 +114,10 @@ def constructor():
     project_name = sys.argv[1]
     package_name = sys.argv[2]
     script_name = sys.argv[3]
-    pkg_skeleton(project_name, package_name, script_name)
+    try:
+        pkg_skeleton_linux(project_name, package_name, script_name)
+    except:
+        pkg_skeleton_win(project_name, package_name, script_name)
     writter_requirements(project_name, 'requirements.txt')
     writter_gitignore(project_name, '.gitignore')
     writter_makefile(project_name, 'Makefile')
